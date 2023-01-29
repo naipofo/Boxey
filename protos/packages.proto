@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package boxey.packages;
+
+service Packages {
+  rpc ListPackages(PackageRequest) returns (PackageReply) {}
+}
+
+message PackageRequest { string user = 1; }
+
+message PackageReply { repeated Package packages = 1; }
+
+message Package {
+  string title = 1;
+  int32 weight = 2; // in grams
+}
