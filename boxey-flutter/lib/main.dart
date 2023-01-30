@@ -65,7 +65,9 @@ class PackageListPage extends ConsumerWidget {
           itemBuilder: (context, index) {
             var item = data[index];
             return ListTile(
-              title: Text("Package ${item.title}, weight: ${item.weight}"),
+              title: Text(
+                "#${item.id} Package ${item.title}, weight: ${item.weight}",
+              ),
             );
           },
         ),
