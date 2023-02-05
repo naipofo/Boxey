@@ -11,20 +11,11 @@ import 'package:protobuf/protobuf.dart' as $pb;
 
 class PackageRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'PackageRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'boxey.packages'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'user')
     ..hasRequiredFields = false
   ;
 
   PackageRequest._() : super();
-  factory PackageRequest({
-    $core.String? user,
-  }) {
-    final _result = create();
-    if (user != null) {
-      _result.user = user;
-    }
-    return _result;
-  }
+  factory PackageRequest() => create();
   factory PackageRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory PackageRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
@@ -45,15 +36,6 @@ class PackageRequest extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static PackageRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<PackageRequest>(create);
   static PackageRequest? _defaultInstance;
-
-  @$pb.TagNumber(1)
-  $core.String get user => $_getSZ(0);
-  @$pb.TagNumber(1)
-  set user($core.String v) { $_setString(0, v); }
-  @$pb.TagNumber(1)
-  $core.bool hasUser() => $_has(0);
-  @$pb.TagNumber(1)
-  void clearUser() => clearField(1);
 }
 
 class PackageReply extends $pb.GeneratedMessage {
@@ -99,7 +81,7 @@ class PackageReply extends $pb.GeneratedMessage {
 
 class Package extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Package', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'boxey.packages'), createEmptyInstance: create)
-    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id', $pb.PbFieldType.O3)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'uid')
     ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'title')
     ..a<$core.int>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'weight', $pb.PbFieldType.O3)
     ..hasRequiredFields = false
@@ -107,13 +89,13 @@ class Package extends $pb.GeneratedMessage {
 
   Package._() : super();
   factory Package({
-    $core.int? id,
+    $core.String? uid,
     $core.String? title,
     $core.int? weight,
   }) {
     final _result = create();
-    if (id != null) {
-      _result.id = id;
+    if (uid != null) {
+      _result.uid = uid;
     }
     if (title != null) {
       _result.title = title;
@@ -145,13 +127,13 @@ class Package extends $pb.GeneratedMessage {
   static Package? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.int get id => $_getIZ(0);
+  $core.String get uid => $_getSZ(0);
   @$pb.TagNumber(1)
-  set id($core.int v) { $_setSignedInt32(0, v); }
+  set uid($core.String v) { $_setString(0, v); }
   @$pb.TagNumber(1)
-  $core.bool hasId() => $_has(0);
+  $core.bool hasUid() => $_has(0);
   @$pb.TagNumber(1)
-  void clearId() => clearField(1);
+  void clearUid() => clearField(1);
 
   @$pb.TagNumber(2)
   $core.String get title => $_getSZ(1);

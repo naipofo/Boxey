@@ -6,12 +6,12 @@ service Packages {
   rpc ListPackages(PackageRequest) returns (PackageReply) {}
 }
 
-message PackageRequest { string user = 1; }
+message PackageRequest {}
 
 message PackageReply { repeated Package packages = 1; }
 
 message Package {
-  int32 id = 1;
+  string uid = 1;
   string title = 2;
   int32 weight = 3; // in grams
 }

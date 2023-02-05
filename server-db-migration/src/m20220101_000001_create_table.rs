@@ -12,15 +12,13 @@ impl MigrationTrait for Migration {
                     .table(Package::Table)
                     .if_not_exists()
                     .col(
-                        ColumnDef::new(Package::Id)
-                            .integer()
+                        ColumnDef::new(Package::UId)
+                            .string()
                             .not_null()
-                            .auto_increment()
                             .primary_key(),
                     )
                     .col(ColumnDef::new(Package::Title).string().not_null())
                     .col(ColumnDef::new(Package::Weight).integer().not_null())
-                    .col(ColumnDef::new(Package::Recipient).string().not_null())
                     .to_owned(),
             )
             .await?;
@@ -39,6 +37,53 @@ impl MigrationTrait for Migration {
                     .col(ColumnDef::new(User::Nickname).string().not_null())
                     .to_owned(),
             )
+            .await?;
+        manager
+            .create_table(
+                Table::create()
+                    .table(UserPackage::Table)
+                    .if_not_exists()
+                    .col(ColumnDef::new(UserPackage::UserId).integer().not_null())
+                    .col(ColumnDef::new(UserPackage::PackageUid).string().not_null())
+                    .primary_key(
+                        Index::create()
+                            .col(UserPackage::UserId)
+                            .col(UserPackage::PackageUid),
+                    )
+                    .foreign_key(
+                        ForeignKeyCreateStatement::new()
+                            .from(UserPackage::Table, UserPackage::UserId)
+                            .to(User::Table, User::Id),
+                    )
+                    .foreign_key(
+                        ForeignKeyCreateStatement::new()
+                            .from(UserPackage::Table, UserPackage::PackageUid)
+                            .to(Package::Table, Package::UId),
+                    )
+                    .to_owned(),
+            )
+            .await?;
+        manager
+            .create_table(
+                Table::create()
+                    .table(Session::Table)
+                    .if_not_exists()
+                    .col(
+                        ColumnDef::new(Session::Id)
+                            .integer()
+                            .not_null()
+                            .auto_increment()
+                            .primary_key(),
+                    )
+                    .col(ColumnDef::new(Session::UserId).integer().not_null())
+                    .col(ColumnDef::new(Session::Secret).string().not_null())
+                    .foreign_key(
+                        ForeignKeyCreateStatement::new()
+                            .from(Session::Table, Session::UserId)
+                            .to(User::Table, User::Id),
+                    )
+                    .to_owned(),
+            )
             .await
     }
 
@@ -55,10 +100,9 @@ impl MigrationTrait for Migration {
 #[derive(Iden)]
 enum Package {
     Table,
-    Id,
+    UId,
     Title,
     Weight,
-    Recipient,
 }
 
 #[derive(Iden)]
@@ -66,4 +110,19 @@ enum User {
     Table,
     Id,
     Nickname,
+}
+
+#[derive(Iden)]
+enum UserPackage {
+    Table,
+    UserId,
+    PackageUid,
+}
+
+#[derive(Iden)]
+enum Session {
+    Table,
+    Id,
+    UserId,
+    Secret,
 }

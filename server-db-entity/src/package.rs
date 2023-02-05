@@ -5,14 +5,22 @@ use sea_orm::entity::prelude::*;
 #[derive(Clone, Debug, PartialEq, DeriveEntityModel, Eq)]
 #[sea_orm(table_name = "package")]
 pub struct Model {
-    #[sea_orm(primary_key)]
-    pub id: i32,
+    #[sea_orm(primary_key, auto_increment = false)]
+    pub u_id: String,
     pub title: String,
     pub weight: i32,
-    pub recipient: String,
 }
 
 #[derive(Copy, Clone, Debug, EnumIter, DeriveRelation)]
 pub enum Relation {}
+
+impl Related<super::user::Entity> for Entity {
+    fn to() -> RelationDef {
+        super::user_package::Relation::User.def()
+    }
+    fn via() -> Option<RelationDef> {
+        Some(super::user_package::Relation::Package.def().rev())
+    }
+}
 
 impl ActiveModelBehavior for ActiveModel {}

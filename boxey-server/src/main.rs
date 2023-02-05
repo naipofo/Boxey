@@ -2,9 +2,10 @@ mod protos;
 mod services;
 use db::BoxeyDatabase;
 use migration::{Migrator, MigratorTrait};
+use protos::boxey::auth::user_auth_server::UserAuthServer;
 use protos::boxey::packages::packages_server::PackagesServer;
 use sea_orm::{Database, DatabaseConnection};
-use services::PackageService;
+use services::{AuthService, PackageService};
 use std::sync::Arc;
 use tonic::codec::CompressionEncoding;
 use tonic::transport::Server;
@@ -22,11 +23,21 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     let boxey_db = Arc::new(BoxeyDatabase::new(db));
 
-    let package_service = PackageService { db: boxey_db };
+    let package_service = PackageService {
+        db: boxey_db.clone(),
+    };
+    let auth_service = AuthService {
+        db: boxey_db.clone(),
+    };
 
     Server::builder()
         .add_service(
             PackagesServer::new(package_service)
+                .send_compressed(CompressionEncoding::Gzip)
+                .accept_compressed(CompressionEncoding::Gzip),
+        )
+        .add_service(
+            UserAuthServer::new(auth_service)
                 .send_compressed(CompressionEncoding::Gzip)
                 .accept_compressed(CompressionEncoding::Gzip),
         )

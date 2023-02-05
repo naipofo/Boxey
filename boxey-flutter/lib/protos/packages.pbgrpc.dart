@@ -10,22 +10,22 @@ import 'dart:async' as $async;
 import 'dart:core' as $core;
 
 import 'package:grpc/service_api.dart' as $grpc;
-import 'packages.pb.dart' as $0;
+import 'packages.pb.dart' as $1;
 export 'packages.pb.dart';
 
 class PackagesClient extends $grpc.Client {
   static final _$listPackages =
-      $grpc.ClientMethod<$0.PackageRequest, $0.PackageReply>(
+      $grpc.ClientMethod<$1.PackageRequest, $1.PackageReply>(
           '/boxey.packages.Packages/ListPackages',
-          ($0.PackageRequest value) => value.writeToBuffer(),
-          ($core.List<$core.int> value) => $0.PackageReply.fromBuffer(value));
+          ($1.PackageRequest value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $1.PackageReply.fromBuffer(value));
 
   PackagesClient($grpc.ClientChannel channel,
       {$grpc.CallOptions? options,
       $core.Iterable<$grpc.ClientInterceptor>? interceptors})
       : super(channel, options: options, interceptors: interceptors);
 
-  $grpc.ResponseFuture<$0.PackageReply> listPackages($0.PackageRequest request,
+  $grpc.ResponseFuture<$1.PackageReply> listPackages($1.PackageRequest request,
       {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$listPackages, request, options: options);
   }
@@ -35,20 +35,20 @@ abstract class PackagesServiceBase extends $grpc.Service {
   $core.String get $name => 'boxey.packages.Packages';
 
   PackagesServiceBase() {
-    $addMethod($grpc.ServiceMethod<$0.PackageRequest, $0.PackageReply>(
+    $addMethod($grpc.ServiceMethod<$1.PackageRequest, $1.PackageReply>(
         'ListPackages',
         listPackages_Pre,
         false,
         false,
-        ($core.List<$core.int> value) => $0.PackageRequest.fromBuffer(value),
-        ($0.PackageReply value) => value.writeToBuffer()));
+        ($core.List<$core.int> value) => $1.PackageRequest.fromBuffer(value),
+        ($1.PackageReply value) => value.writeToBuffer()));
   }
 
-  $async.Future<$0.PackageReply> listPackages_Pre(
-      $grpc.ServiceCall call, $async.Future<$0.PackageRequest> request) async {
+  $async.Future<$1.PackageReply> listPackages_Pre(
+      $grpc.ServiceCall call, $async.Future<$1.PackageRequest> request) async {
     return listPackages(call, await request);
   }
 
-  $async.Future<$0.PackageReply> listPackages(
-      $grpc.ServiceCall call, $0.PackageRequest request);
+  $async.Future<$1.PackageReply> listPackages(
+      $grpc.ServiceCall call, $1.PackageRequest request);
 }

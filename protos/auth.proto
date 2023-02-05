@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package boxey.auth;
+
+service UserAuth {
+  rpc Register(UserRegisterRequest) returns (UserRegisterReply) {}
+}
+
+// Add device metrics
+message UserRegisterRequest { string nickname = 1; }
+
+message UserRegisterReply {
+  oneof register_reply {
+    string error_message = 1;
+    string session_auth = 2;
+  }
+}
