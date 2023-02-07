@@ -7,18 +7,19 @@ import 'routes.dart';
 
 part 'router.g.dart';
 
-final _key = GlobalKey<NavigatorState>(debugLabel: 'routerKey');
+final key = GlobalKey<NavigatorState>(debugLabel: 'routerKey');
+final shellKey = GlobalKey<NavigatorState>(debugLabel: 'shellKey');
 
 @riverpod
 GoRouter router(RouterRef ref) {
   final notifier = ref.watch(routerNotifierProvider.notifier);
 
   return GoRouter(
-    navigatorKey: _key,
+    navigatorKey: key,
     refreshListenable: notifier,
     debugLogDiagnostics: true,
-    initialLocation: SplashRoute.path,
-    routes: notifier.routes,
+    initialLocation: '/splash',
+    routes: routes,
     redirect: notifier.redirect,
   );
 }

@@ -3,7 +3,6 @@ import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../providers/auth.dart';
-import 'routes.dart';
 
 part 'router_notifier.g.dart';
 
@@ -28,19 +27,17 @@ class RouterNotifier extends _$RouterNotifier implements Listenable {
   String? redirect(BuildContext context, GoRouterState state) {
     if (this.state.isLoading || this.state.hasError) return null;
 
-    final isSplash = state.location == SplashRoute.path;
+    final isSplash = state.location == '/splash';
 
     if (isSplash) {
-      return isAuth ? HomeRoute.path : LoginRoute.path;
+      return isAuth ? "/packages" : "/login";
     }
 
-    final isLoggingIn = state.location == LoginRoute.path;
-    if (isLoggingIn) return isAuth ? HomeRoute.path : null;
+    final isLoggingIn = state.location == "/login";
+    if (isLoggingIn) return isAuth ? "/packages" : null;
 
-    return isAuth ? null : SplashRoute.path;
+    return isAuth ? null : "/splash";
   }
-
-  List<GoRoute> get routes => $appRoutes;
 
   @override
   void addListener(VoidCallback listener) {

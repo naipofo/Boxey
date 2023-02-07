@@ -1,52 +1,41 @@
-import 'package:boxey_flutter/pages/home.dart';
-import 'package:boxey_flutter/pages/login.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../pages/packages.dart';
+import '../pages/home.dart';
+import '../pages/login.dart';
+import '../pages/packages/package_details.dart';
+import '../pages/packages/package_list.dart';
+import '../pages/settings.dart';
+import 'router.dart';
 
-part 'routes.g.dart';
-
-@TypedGoRoute<SplashRoute>(path: SplashRoute.path)
-class SplashRoute extends GoRouteData {
-  const SplashRoute();
-  static const path = '/splash';
-
-  @override
-  Widget build(BuildContext context, GoRouterState state) {
-    return const Text('Splash');
-  }
-}
-
-@TypedGoRoute<HomeRoute>(path: HomeRoute.path)
-class HomeRoute extends GoRouteData {
-  const HomeRoute();
-  static const path = '/home';
-
-  @override
-  Widget build(BuildContext context, GoRouterState state) {
-    return const HomePage();
-  }
-}
-
-@TypedGoRoute<LoginRoute>(path: LoginRoute.path)
-class LoginRoute extends GoRouteData {
-  const LoginRoute();
-  static const path = '/login';
-
-  @override
-  Widget build(BuildContext context, GoRouterState state) {
-    return const LoginPage();
-  }
-}
-
-@TypedGoRoute<PackagesRoute>(path: PackagesRoute.path)
-class PackagesRoute extends GoRouteData {
-  const PackagesRoute();
-  static const path = '/packages';
-
-  @override
-  Widget build(BuildContext context, GoRouterState state) {
-    return const PackageListPage();
-  }
-}
+List<RouteBase> routes = [
+  GoRoute(
+    path: '/splash',
+    builder: (context, state) => const Text('Splash'),
+  ),
+  GoRoute(
+    path: '/login',
+    builder: (context, state) => const LoginPage(),
+  ),
+  ShellRoute(
+    navigatorKey: shellKey,
+    builder: (context, state, child) => HomePage(
+      child: child,
+    ),
+    routes: [
+      GoRoute(
+        path: '/packages',
+        builder: (context, state) => const PackageListPage(),
+      ),
+      GoRoute(
+        path: '/settings',
+        builder: (context, state) => const SettingsPage(),
+      ),
+      GoRoute(
+        path: '/package/:uid',
+        builder: (context, state) =>
+            PackageDetailsPage(uid: state.params['uid']),
+      )
+    ],
+  )
+];
