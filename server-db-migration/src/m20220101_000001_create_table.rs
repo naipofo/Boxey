@@ -17,8 +17,7 @@ impl MigrationTrait for Migration {
                             .not_null()
                             .primary_key(),
                     )
-                    .col(ColumnDef::new(Package::Title).string().not_null())
-                    .col(ColumnDef::new(Package::Weight).integer().not_null())
+                    .col(ColumnDef::new(Package::Sender).string().not_null())
                     .to_owned(),
             )
             .await?;
@@ -66,6 +65,43 @@ impl MigrationTrait for Migration {
         manager
             .create_table(
                 Table::create()
+                    .table(Events::Table)
+                    .if_not_exists()
+                    .col(
+                        ColumnDef::new(Events::UId)
+                            .string()
+                            .not_null()
+                            .primary_key(),
+                    )
+                    .col(ColumnDef::new(Events::PackageUid).string().not_null())
+                    .col(
+                        ColumnDef::new(Events::Type)
+                            .enumeration(
+                                EventEnum::Enum,
+                                [
+                                    EventEnum::Prepared,
+                                    EventEnum::HandedOver,
+                                    EventEnum::InTransit,
+                                    EventEnum::InCenter,
+                                    EventEnum::Ready,
+                                    EventEnum::Recived,
+                                ],
+                            )
+                            .not_null(),
+                    )
+                    .col(ColumnDef::new(Events::Time).string().not_null())
+                    .col(ColumnDef::new(Events::Location).string().not_null())
+                    .foreign_key(
+                        ForeignKeyCreateStatement::new()
+                            .from(Events::Table, Events::PackageUid)
+                            .to(Package::Table, Package::UId),
+                    )
+                    .to_owned(),
+            )
+            .await?;
+        manager
+            .create_table(
+                Table::create()
                     .table(Session::Table)
                     .if_not_exists()
                     .col(
@@ -101,8 +137,7 @@ impl MigrationTrait for Migration {
 enum Package {
     Table,
     UId,
-    Title,
-    Weight,
+    Sender,
 }
 
 #[derive(Iden)]
@@ -117,6 +152,27 @@ enum UserPackage {
     Table,
     UserId,
     PackageUid,
+}
+
+#[derive(Iden)]
+enum Events {
+    Table,
+    UId,
+    PackageUid,
+    Type,
+    Time,
+    Location,
+}
+
+#[derive(Iden)]
+enum EventEnum {
+    Enum,
+    Prepared,
+    HandedOver,
+    InTransit,
+    InCenter,
+    Ready,
+    Recived,
 }
 
 #[derive(Iden)]

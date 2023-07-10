@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../../protos/packages.pbgrpc.dart';
 import '../../providers/packages.dart';
+import '../../protos/packages.pbgrpc.dart';
 
 class PackageDetailsPage extends HookConsumerWidget {
   const PackageDetailsPage({super.key, this.uid});
@@ -18,10 +18,11 @@ class PackageDetailsPage extends HookConsumerWidget {
       ),
       body: packages.maybeMap(
           data: (data) {
-            Package? package = data.value.cast<Package?>().firstWhere(
-                  (element) => element?.uid == uid,
-                  orElse: () => null,
-                );
+            PackageHeader? package =
+                data.value.cast<PackageHeader?>().firstWhere(
+                      (element) => element?.uid == uid,
+                      orElse: () => null,
+                    );
             return package != null
                 ? PackageDetials(package: package)
                 : const Placeholder();
@@ -34,7 +35,7 @@ class PackageDetailsPage extends HookConsumerWidget {
 class PackageDetials extends StatelessWidget {
   const PackageDetials({super.key, required this.package});
 
-  final Package package;
+  final PackageHeader package;
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +52,7 @@ class PackageDetials extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  package.title,
+                  package.sender,
                   style: Theme.of(context)
                       .textTheme
                       .displayMedium!

@@ -2,16 +2,42 @@ syntax = "proto3";
 
 package boxey.packages;
 
+import "google/protobuf/timestamp.proto";
+
 service Packages {
-  rpc ListPackages(PackageRequest) returns (PackageReply) {}
+  rpc PackageList(PackageListRequest) returns (PackageListReply) {}
+  rpc PackageDetails(PackageDetailsRequest) returns (PackageDetailsReply) {}
 }
 
-message PackageRequest {}
+message PackageListRequest {}
+message PackageListReply { repeated PackageHeader packages = 1; }
 
-message PackageReply { repeated Package packages = 1; }
+message PackageDetailsRequest {  }
+message PackageDetailsReply{ 
+  PackageHeader header = 1;
+  repeated StatusDetails status = 2;
+  optional PickupDetails pickup = 3;
+}
 
-message Package {
+message PackageHeader {
   string uid = 1;
-  string title = 2;
-  int32 weight = 3; // in grams
+  string sender = 2;
+  Status status = 3;
+}
+
+enum Status {
+  PREPARED = 0;
+  HANDED_OVER = 1;
+  IN_TRANSIT = 2;
+  READY = 3;
+  RECEIVED = 4;
+}
+
+message StatusDetails{
+  Status type = 1;
+  google.protobuf.Timestamp time = 2;
+}
+
+message PickupDetails{
+  string code = 1;
 }

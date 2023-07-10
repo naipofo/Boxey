@@ -1,32 +1,29 @@
-///
+//
 //  Generated code. Do not modify.
 //  source: auth.proto
 //
 // @dart = 2.12
-// ignore_for_file: annotate_overrides,camel_case_types,constant_identifier_names,directives_ordering,library_prefixes,non_constant_identifier_names,prefer_final_fields,return_of_invalid_type,unnecessary_const,unnecessary_import,unnecessary_this,unused_import,unused_shown_name
+
+// ignore_for_file: annotate_overrides, camel_case_types
+// ignore_for_file: constant_identifier_names, library_prefixes
+// ignore_for_file: non_constant_identifier_names, prefer_final_fields
+// ignore_for_file: unnecessary_import, unnecessary_this, unused_import
 
 import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
 class UserRegisterRequest extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'UserRegisterRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'boxey.auth'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'nickname')
+  factory UserRegisterRequest() => create();
+  UserRegisterRequest._() : super();
+  factory UserRegisterRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory UserRegisterRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'UserRegisterRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'boxey.auth'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'nickname')
     ..hasRequiredFields = false
   ;
 
-  UserRegisterRequest._() : super();
-  factory UserRegisterRequest({
-    $core.String? nickname,
-  }) {
-    final _result = create();
-    if (nickname != null) {
-      _result.nickname = nickname;
-    }
-    return _result;
-  }
-  factory UserRegisterRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory UserRegisterRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -36,8 +33,10 @@ class UserRegisterRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  UserRegisterRequest copyWith(void Function(UserRegisterRequest) updates) => super.copyWith((message) => updates(message as UserRegisterRequest)) as UserRegisterRequest; // ignore: deprecated_member_use
+  UserRegisterRequest copyWith(void Function(UserRegisterRequest) updates) => super.copyWith((message) => updates(message as UserRegisterRequest)) as UserRegisterRequest;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static UserRegisterRequest create() => UserRegisterRequest._();
   UserRegisterRequest createEmptyInstance() => create();
@@ -63,34 +62,23 @@ enum UserRegisterReply_RegisterReply {
 }
 
 class UserRegisterReply extends $pb.GeneratedMessage {
+  factory UserRegisterReply() => create();
+  UserRegisterReply._() : super();
+  factory UserRegisterReply.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory UserRegisterReply.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
   static const $core.Map<$core.int, UserRegisterReply_RegisterReply> _UserRegisterReply_RegisterReplyByTag = {
     1 : UserRegisterReply_RegisterReply.errorMessage,
     2 : UserRegisterReply_RegisterReply.sessionAuth,
     0 : UserRegisterReply_RegisterReply.notSet
   };
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'UserRegisterReply', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'boxey.auth'), createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'UserRegisterReply', package: const $pb.PackageName(_omitMessageNames ? '' : 'boxey.auth'), createEmptyInstance: create)
     ..oo(0, [1, 2])
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'errorMessage')
-    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sessionAuth')
+    ..aOS(1, _omitFieldNames ? '' : 'errorMessage')
+    ..aOS(2, _omitFieldNames ? '' : 'sessionAuth')
     ..hasRequiredFields = false
   ;
 
-  UserRegisterReply._() : super();
-  factory UserRegisterReply({
-    $core.String? errorMessage,
-    $core.String? sessionAuth,
-  }) {
-    final _result = create();
-    if (errorMessage != null) {
-      _result.errorMessage = errorMessage;
-    }
-    if (sessionAuth != null) {
-      _result.sessionAuth = sessionAuth;
-    }
-    return _result;
-  }
-  factory UserRegisterReply.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory UserRegisterReply.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -100,8 +88,10 @@ class UserRegisterReply extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  UserRegisterReply copyWith(void Function(UserRegisterReply) updates) => super.copyWith((message) => updates(message as UserRegisterReply)) as UserRegisterReply; // ignore: deprecated_member_use
+  UserRegisterReply copyWith(void Function(UserRegisterReply) updates) => super.copyWith((message) => updates(message as UserRegisterReply)) as UserRegisterReply;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static UserRegisterReply create() => UserRegisterReply._();
   UserRegisterReply createEmptyInstance() => create();
@@ -132,3 +122,6 @@ class UserRegisterReply extends $pb.GeneratedMessage {
   void clearSessionAuth() => clearField(2);
 }
 
+
+const _omitFieldNames = $core.bool.fromEnvironment('protobuf.omit_field_names');
+const _omitMessageNames = $core.bool.fromEnvironment('protobuf.omit_message_names');

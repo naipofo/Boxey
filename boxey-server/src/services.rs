@@ -4,7 +4,7 @@ use crate::{
             user_auth_server::UserAuth, user_register_reply::RegisterReply, UserRegisterReply,
             UserRegisterRequest,
         },
-        packages::{packages_server::Packages, Package, PackageReply, PackageRequest},
+        packages::{packages_server::Packages, PackageHeader, PackageListReply, PackageListRequest, PackageDetailsRequest, PackageDetailsReply},
     },
     BoxeyDatabase,
 };
@@ -33,10 +33,10 @@ impl PackageService {
 
 #[tonic::async_trait]
 impl Packages for PackageService {
-    async fn list_packages(
+    async fn package_list(
         &self,
-        request: Request<PackageRequest>,
-    ) -> Result<Response<PackageReply>, Status> {
+        request: Request<PackageListRequest>,
+    ) -> Result<Response<PackageListReply>, Status> {
         let user = self.auth_user(&request).await?;
         let user_packages = self
             .db
@@ -44,16 +44,23 @@ impl Packages for PackageService {
             .await
             .map_err::<Status, _>(|_| ServiceError::DbError.into())?;
 
-        Ok(Response::new(PackageReply {
+        Ok(Response::new(PackageListReply {
             packages: user_packages
                 .into_iter()
-                .map(|e| Package {
+                .map(|e| PackageHeader {
                     uid: e.u_id,
-                    title: e.title,
-                    weight: e.weight,
+                    sender: "SENDER".to_string(),
+                    status: 0
                 })
                 .collect(),
         }))
+    }
+
+    async fn package_details(
+        &self,
+        _request: Request<PackageDetailsRequest>
+    ) -> Result<Response<PackageDetailsReply>, Status> {
+        todo!()
     }
 }
 

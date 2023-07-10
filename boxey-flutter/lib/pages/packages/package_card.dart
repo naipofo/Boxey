@@ -1,5 +1,6 @@
-import '../../protos/packages.pbgrpc.dart';
 import 'package:flutter/material.dart';
+
+import '../../protos/packages.pbgrpc.dart';
 
 class PackageCard extends StatelessWidget {
   const PackageCard({
@@ -9,7 +10,7 @@ class PackageCard extends StatelessWidget {
     this.selected = false,
   });
 
-  final Package package;
+  final PackageHeader package;
   final Function()? onTap;
   final bool selected;
 
@@ -32,7 +33,7 @@ class PackageCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                package.title,
+                package.sender,
                 style: Theme.of(context)
                     .textTheme
                     .headlineSmall!
@@ -43,7 +44,7 @@ class PackageCard extends StatelessWidget {
               const SizedBox(
                 height: 8.0,
               ),
-              Text('${package.weight} g ')
+              Text(package.status.name)
             ],
           ),
         ),

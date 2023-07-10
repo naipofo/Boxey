@@ -31,10 +31,9 @@ class LoginState extends _$LoginState {
 
   Future<void> login(String nickname) async {
     state = await AsyncValue.guard(() async {
-      return ref
-          .watch(authClinetProvider)
-          .register(UserRegisterRequest(nickname: nickname))
-          .then(
+      var req = UserRegisterRequest();
+      req.nickname = nickname;
+      return ref.watch(authClinetProvider).register(req).then(
         (p0) {
           switch (p0.whichRegisterReply()) {
             case UserRegisterReply_RegisterReply.sessionAuth:

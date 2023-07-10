@@ -25,9 +25,9 @@ PackagesClient packageClinet(PackageClinetRef ref) {
 }
 
 @riverpod
-Future<List<Package>> userPackage(UserPackageRef ref) {
+Future<List<PackageHeader>> userPackage(UserPackageRef ref) {
   return ref
       .watch(packageClinetProvider)
-      .listPackages(PackageRequest())
+      .packageList(PackageListRequest())
       .then((p0) => p0.packages);
 }

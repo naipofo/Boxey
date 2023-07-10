@@ -34,7 +34,7 @@ List<RouteBase> routes = [
       GoRoute(
         path: '/package/:uid',
         builder: (context, state) =>
-            PackageDetailsPage(uid: state.params['uid']),
+            PackageDetailsPage(uid: state.pathParameters['uid']),
       )
     ],
   )

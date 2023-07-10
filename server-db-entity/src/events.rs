@@ -3,12 +3,14 @@
 use sea_orm::entity::prelude::*;
 
 #[derive(Clone, Debug, PartialEq, DeriveEntityModel, Eq)]
-#[sea_orm(table_name = "user_package")]
+#[sea_orm(table_name = "events")]
 pub struct Model {
     #[sea_orm(primary_key, auto_increment = false)]
-    pub user_id: i32,
-    #[sea_orm(primary_key, auto_increment = false)]
+    pub u_id: String,
     pub package_uid: String,
+    pub r#type: String,
+    pub time: String,
+    pub location: String,
 }
 
 #[derive(Copy, Clone, Debug, EnumIter, DeriveRelation)]
@@ -21,25 +23,11 @@ pub enum Relation {
         on_delete = "NoAction"
     )]
     Package,
-    #[sea_orm(
-        belongs_to = "super::user::Entity",
-        from = "Column::UserId",
-        to = "super::user::Column::Id",
-        on_update = "NoAction",
-        on_delete = "NoAction"
-    )]
-    User,
 }
 
 impl Related<super::package::Entity> for Entity {
     fn to() -> RelationDef {
         Relation::Package.def()
-    }
-}
-
-impl Related<super::user::Entity> for Entity {
-    fn to() -> RelationDef {
-        Relation::User.def()
     }
 }
 
