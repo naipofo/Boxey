@@ -31,3 +31,11 @@ Future<List<PackageHeader>> userPackage(UserPackageRef ref) {
       .packageList(PackageListRequest())
       .then((p0) => p0.packages);
 }
+
+@riverpod
+Future<PackageDetailsReply> userPackageDetails(UserPackageDetailsRef ref,
+    {required String uid}) {
+  return ref
+      .watch(packageClinetProvider)
+      .packageDetails(PackageDetailsRequest()..uid = uid);
+}

@@ -1,2 +1,2 @@
 [workspace]
-members = ["boxey-server", "server-db-migration", "server-db-entity"]
+members = ["boxey-server"]

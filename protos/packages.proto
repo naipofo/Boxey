@@ -12,7 +12,7 @@ service Packages {
 message PackageListRequest {}
 message PackageListReply { repeated PackageHeader packages = 1; }
 
-message PackageDetailsRequest {  }
+message PackageDetailsRequest { string uid = 1; }
 message PackageDetailsReply{ 
   PackageHeader header = 1;
   repeated StatusDetails status = 2;
@@ -22,10 +22,10 @@ message PackageDetailsReply{
 message PackageHeader {
   string uid = 1;
   string sender = 2;
-  Status status = 3;
+  StatusTypeUser status = 3;
 }
 
-enum Status {
+enum StatusTypeUser {
   PREPARED = 0;
   HANDED_OVER = 1;
   IN_TRANSIT = 2;
@@ -34,7 +34,7 @@ enum Status {
 }
 
 message StatusDetails{
-  Status type = 1;
+  StatusTypeUser type = 1;
   google.protobuf.Timestamp time = 2;
 }
 

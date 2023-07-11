@@ -93,6 +93,7 @@ class PackageDetailsRequest extends $pb.GeneratedMessage {
   factory PackageDetailsRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'PackageDetailsRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'boxey.packages'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'uid')
     ..hasRequiredFields = false
   ;
 
@@ -116,6 +117,15 @@ class PackageDetailsRequest extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static PackageDetailsRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<PackageDetailsRequest>(create);
   static PackageDetailsRequest? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get uid => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set uid($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasUid() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearUid() => clearField(1);
 }
 
 class PackageDetailsReply extends $pb.GeneratedMessage {
@@ -187,7 +197,7 @@ class PackageHeader extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'PackageHeader', package: const $pb.PackageName(_omitMessageNames ? '' : 'boxey.packages'), createEmptyInstance: create)
     ..aOS(1, _omitFieldNames ? '' : 'uid')
     ..aOS(2, _omitFieldNames ? '' : 'sender')
-    ..e<Status>(3, _omitFieldNames ? '' : 'status', $pb.PbFieldType.OE, defaultOrMaker: Status.PREPARED, valueOf: Status.valueOf, enumValues: Status.values)
+    ..e<StatusTypeUser>(3, _omitFieldNames ? '' : 'status', $pb.PbFieldType.OE, defaultOrMaker: StatusTypeUser.PREPARED, valueOf: StatusTypeUser.valueOf, enumValues: StatusTypeUser.values)
     ..hasRequiredFields = false
   ;
 
@@ -231,9 +241,9 @@ class PackageHeader extends $pb.GeneratedMessage {
   void clearSender() => clearField(2);
 
   @$pb.TagNumber(3)
-  Status get status => $_getN(2);
+  StatusTypeUser get status => $_getN(2);
   @$pb.TagNumber(3)
-  set status(Status v) { setField(3, v); }
+  set status(StatusTypeUser v) { setField(3, v); }
   @$pb.TagNumber(3)
   $core.bool hasStatus() => $_has(2);
   @$pb.TagNumber(3)
@@ -247,7 +257,7 @@ class StatusDetails extends $pb.GeneratedMessage {
   factory StatusDetails.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'StatusDetails', package: const $pb.PackageName(_omitMessageNames ? '' : 'boxey.packages'), createEmptyInstance: create)
-    ..e<Status>(1, _omitFieldNames ? '' : 'type', $pb.PbFieldType.OE, defaultOrMaker: Status.PREPARED, valueOf: Status.valueOf, enumValues: Status.values)
+    ..e<StatusTypeUser>(1, _omitFieldNames ? '' : 'type', $pb.PbFieldType.OE, defaultOrMaker: StatusTypeUser.PREPARED, valueOf: StatusTypeUser.valueOf, enumValues: StatusTypeUser.values)
     ..aOM<$2.Timestamp>(2, _omitFieldNames ? '' : 'time', subBuilder: $2.Timestamp.create)
     ..hasRequiredFields = false
   ;
@@ -274,9 +284,9 @@ class StatusDetails extends $pb.GeneratedMessage {
   static StatusDetails? _defaultInstance;
 
   @$pb.TagNumber(1)
-  Status get type => $_getN(0);
+  StatusTypeUser get type => $_getN(0);
   @$pb.TagNumber(1)
-  set type(Status v) { setField(1, v); }
+  set type(StatusTypeUser v) { setField(1, v); }
   @$pb.TagNumber(1)
   $core.bool hasType() => $_has(0);
   @$pb.TagNumber(1)

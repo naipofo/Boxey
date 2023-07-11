@@ -43,8 +43,8 @@ class PackageListPage extends HookConsumerWidget {
                   Expanded(
                     flex: 2,
                     child: selectedIndex.value != null
-                        ? PackageDetials(
-                            package: data[selectedIndex.value ?? 0],
+                        ? PackageDetailsPage(
+                            uid: data[selectedIndex.value ?? 0].uid,
                           )
                         : const Placeholder(),
                   )

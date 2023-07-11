@@ -13,9 +13,9 @@ import 'dart:convert' as $convert;
 import 'dart:core' as $core;
 import 'dart:typed_data' as $typed_data;
 
-@$core.Deprecated('Use statusDescriptor instead')
-const Status$json = {
-  '1': 'Status',
+@$core.Deprecated('Use statusTypeUserDescriptor instead')
+const StatusTypeUser$json = {
+  '1': 'StatusTypeUser',
   '2': [
     {'1': 'PREPARED', '2': 0},
     {'1': 'HANDED_OVER', '2': 1},
@@ -25,10 +25,10 @@ const Status$json = {
   ],
 };
 
-/// Descriptor for `Status`. Decode as a `google.protobuf.EnumDescriptorProto`.
-final $typed_data.Uint8List statusDescriptor = $convert.base64Decode(
-    'CgZTdGF0dXMSDAoIUFJFUEFSRUQQABIPCgtIQU5ERURfT1ZFUhABEg4KCklOX1RSQU5TSVQQAh'
-    'IJCgVSRUFEWRADEgwKCFJFQ0VJVkVEEAQ=');
+/// Descriptor for `StatusTypeUser`. Decode as a `google.protobuf.EnumDescriptorProto`.
+final $typed_data.Uint8List statusTypeUserDescriptor = $convert.base64Decode(
+    'Cg5TdGF0dXNUeXBlVXNlchIMCghQUkVQQVJFRBAAEg8KC0hBTkRFRF9PVkVSEAESDgoKSU5fVF'
+    'JBTlNJVBACEgkKBVJFQURZEAMSDAoIUkVDRUlWRUQQBA==');
 
 @$core.Deprecated('Use packageListRequestDescriptor instead')
 const PackageListRequest$json = {
@@ -55,11 +55,14 @@ final $typed_data.Uint8List packageListReplyDescriptor = $convert.base64Decode(
 @$core.Deprecated('Use packageDetailsRequestDescriptor instead')
 const PackageDetailsRequest$json = {
   '1': 'PackageDetailsRequest',
+  '2': [
+    {'1': 'uid', '3': 1, '4': 1, '5': 9, '10': 'uid'},
+  ],
 };
 
 /// Descriptor for `PackageDetailsRequest`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List packageDetailsRequestDescriptor = $convert.base64Decode(
-    'ChVQYWNrYWdlRGV0YWlsc1JlcXVlc3Q=');
+    'ChVQYWNrYWdlRGV0YWlsc1JlcXVlc3QSEAoDdWlkGAEgASgJUgN1aWQ=');
 
 @$core.Deprecated('Use packageDetailsReplyDescriptor instead')
 const PackageDetailsReply$json = {
@@ -87,28 +90,30 @@ const PackageHeader$json = {
   '2': [
     {'1': 'uid', '3': 1, '4': 1, '5': 9, '10': 'uid'},
     {'1': 'sender', '3': 2, '4': 1, '5': 9, '10': 'sender'},
-    {'1': 'status', '3': 3, '4': 1, '5': 14, '6': '.boxey.packages.Status', '10': 'status'},
+    {'1': 'status', '3': 3, '4': 1, '5': 14, '6': '.boxey.packages.StatusTypeUser', '10': 'status'},
   ],
 };
 
 /// Descriptor for `PackageHeader`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List packageHeaderDescriptor = $convert.base64Decode(
     'Cg1QYWNrYWdlSGVhZGVyEhAKA3VpZBgBIAEoCVIDdWlkEhYKBnNlbmRlchgCIAEoCVIGc2VuZG'
-    'VyEi4KBnN0YXR1cxgDIAEoDjIWLmJveGV5LnBhY2thZ2VzLlN0YXR1c1IGc3RhdHVz');
+    'VyEjYKBnN0YXR1cxgDIAEoDjIeLmJveGV5LnBhY2thZ2VzLlN0YXR1c1R5cGVVc2VyUgZzdGF0'
+    'dXM=');
 
 @$core.Deprecated('Use statusDetailsDescriptor instead')
 const StatusDetails$json = {
   '1': 'StatusDetails',
   '2': [
-    {'1': 'type', '3': 1, '4': 1, '5': 14, '6': '.boxey.packages.Status', '10': 'type'},
+    {'1': 'type', '3': 1, '4': 1, '5': 14, '6': '.boxey.packages.StatusTypeUser', '10': 'type'},
     {'1': 'time', '3': 2, '4': 1, '5': 11, '6': '.google.protobuf.Timestamp', '10': 'time'},
   ],
 };
 
 /// Descriptor for `StatusDetails`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List statusDetailsDescriptor = $convert.base64Decode(
-    'Cg1TdGF0dXNEZXRhaWxzEioKBHR5cGUYASABKA4yFi5ib3hleS5wYWNrYWdlcy5TdGF0dXNSBH'
-    'R5cGUSLgoEdGltZRgCIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXBSBHRpbWU=');
+    'Cg1TdGF0dXNEZXRhaWxzEjIKBHR5cGUYASABKA4yHi5ib3hleS5wYWNrYWdlcy5TdGF0dXNUeX'
+    'BlVXNlclIEdHlwZRIuCgR0aW1lGAIgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcFIE'
+    'dGltZQ==');
 
 @$core.Deprecated('Use pickupDetailsDescriptor instead')
 const PickupDetails$json = {

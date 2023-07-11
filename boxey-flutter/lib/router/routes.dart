@@ -33,8 +33,12 @@ List<RouteBase> routes = [
       ),
       GoRoute(
         path: '/package/:uid',
-        builder: (context, state) =>
-            PackageDetailsPage(uid: state.pathParameters['uid']),
+        builder: (context, state) {
+          var uid = state.pathParameters['uid'];
+          return uid != null
+              ? PackageDetailsPage(uid: uid)
+              : const Placeholder();
+        },
       )
     ],
   )

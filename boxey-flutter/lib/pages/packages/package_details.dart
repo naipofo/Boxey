@@ -5,28 +5,23 @@ import '../../providers/packages.dart';
 import '../../protos/packages.pbgrpc.dart';
 
 class PackageDetailsPage extends HookConsumerWidget {
-  const PackageDetailsPage({super.key, this.uid});
+  const PackageDetailsPage({super.key, required this.uid});
 
-  final String? uid;
+  final String uid;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    var packages = ref.watch(userPackageProvider);
+    var package = ref.watch(userPackageDetailsProvider(uid: uid));
     return Scaffold(
       appBar: AppBar(
         title: const Text('Package details'),
       ),
-      body: packages.maybeMap(
+      body: package.maybeWhen(
           data: (data) {
-            PackageHeader? package =
-                data.value.cast<PackageHeader?>().firstWhere(
-                      (element) => element?.uid == uid,
-                      orElse: () => null,
-                    );
-            return package != null
-                ? PackageDetials(package: package)
-                : const Placeholder();
+            return PackageDetials(package: data);
           },
+          error: (error, stackTrace) =>
+              Text(error.toString() + stackTrace.toString()),
           orElse: () => const Placeholder()),
     );
   }
@@ -35,7 +30,7 @@ class PackageDetailsPage extends HookConsumerWidget {
 class PackageDetials extends StatelessWidget {
   const PackageDetials({super.key, required this.package});
 
-  final PackageHeader package;
+  final PackageDetailsReply package;
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +47,7 @@ class PackageDetials extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  package.sender,
+                  package.header.sender,
                   style: Theme.of(context)
                       .textTheme
                       .displayMedium!

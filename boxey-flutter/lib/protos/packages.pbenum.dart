@@ -13,14 +13,14 @@ import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
-class Status extends $pb.ProtobufEnum {
-  static const Status PREPARED = Status._(0, _omitEnumNames ? '' : 'PREPARED');
-  static const Status HANDED_OVER = Status._(1, _omitEnumNames ? '' : 'HANDED_OVER');
-  static const Status IN_TRANSIT = Status._(2, _omitEnumNames ? '' : 'IN_TRANSIT');
-  static const Status READY = Status._(3, _omitEnumNames ? '' : 'READY');
-  static const Status RECEIVED = Status._(4, _omitEnumNames ? '' : 'RECEIVED');
+class StatusTypeUser extends $pb.ProtobufEnum {
+  static const StatusTypeUser PREPARED = StatusTypeUser._(0, _omitEnumNames ? '' : 'PREPARED');
+  static const StatusTypeUser HANDED_OVER = StatusTypeUser._(1, _omitEnumNames ? '' : 'HANDED_OVER');
+  static const StatusTypeUser IN_TRANSIT = StatusTypeUser._(2, _omitEnumNames ? '' : 'IN_TRANSIT');
+  static const StatusTypeUser READY = StatusTypeUser._(3, _omitEnumNames ? '' : 'READY');
+  static const StatusTypeUser RECEIVED = StatusTypeUser._(4, _omitEnumNames ? '' : 'RECEIVED');
 
-  static const $core.List<Status> values = <Status> [
+  static const $core.List<StatusTypeUser> values = <StatusTypeUser> [
     PREPARED,
     HANDED_OVER,
     IN_TRANSIT,
@@ -28,10 +28,10 @@ class Status extends $pb.ProtobufEnum {
     RECEIVED,
   ];
 
-  static final $core.Map<$core.int, Status> _byValue = $pb.ProtobufEnum.initByValue(values);
-  static Status? valueOf($core.int value) => _byValue[value];
+  static final $core.Map<$core.int, StatusTypeUser> _byValue = $pb.ProtobufEnum.initByValue(values);
+  static StatusTypeUser? valueOf($core.int value) => _byValue[value];
 
-  const Status._($core.int v, $core.String n) : super(v, n);
+  const StatusTypeUser._($core.int v, $core.String n) : super(v, n);
 }
 
 
