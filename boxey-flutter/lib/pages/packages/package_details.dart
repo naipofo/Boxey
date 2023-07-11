@@ -57,6 +57,26 @@ class PackageDetials extends StatelessWidget {
             ),
           ),
         ),
+        for (var status in package.status)
+          Card(
+            elevation: 0,
+            color: Theme.of(context).colorScheme.surfaceVariant,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "${status.type} - ${DateTime.fromMillisecondsSinceEpoch((status.time.seconds * 1000).toInt())}",
+                    style: Theme.of(context)
+                        .textTheme
+                        .displayMedium!
+                        .copyWith(color: onColor),
+                  ),
+                ],
+              ),
+            ),
+          ),
       ],
     );
   }
