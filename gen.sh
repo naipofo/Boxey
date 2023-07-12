@@ -1,4 +1,4 @@
-SRC_DIR="protos"
+SRC_DIR="proto/boxey"
 DST_DIR="boxey-flutter/lib/protos"
 protoc -I=$SRC_DIR --dart_out=grpc:$DST_DIR $SRC_DIR/*.proto  google/protobuf/timestamp.proto
 

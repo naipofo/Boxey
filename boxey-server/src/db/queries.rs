@@ -86,6 +86,12 @@ impl BoxeyDatabase {
             )
             .ok()
     }
+    pub fn get_package_events(&self, package: &str) -> Result<Vec<Event>> {
+        self.db
+            .prepare_cached("SELECT u_id, event_type, time FROM event WHERE package_uid = ?")?
+            .query_and_then([package], |r| row_to_event(&r))?
+            .collect()
+    }
 }
 
 fn row_to_package(row: &Row) -> Result<Package> {

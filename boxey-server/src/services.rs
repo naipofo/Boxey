@@ -8,6 +8,7 @@ use crate::{
             packages_server::Packages, PackageDetailsReply, PackageDetailsRequest, PackageHeader,
             PackageListReply, PackageListRequest, PickupDetails, StatusDetails, StatusTypeUser,
         },
+        webtrack::{web_track_server::WebTrack, TrackPackageReply, TrackPackageRequest},
     },
     BoxeyDatabase,
 };
@@ -121,6 +122,34 @@ impl UserAuth for AuthService {
                     Err(e) => RegisterReply::ErrorMessage(format!("{e:?}")),
                 },
             ),
+        }))
+    }
+}
+
+#[derive(Debug)]
+pub struct WebTrackService {
+    pub db: Arc<Mutex<BoxeyDatabase>>,
+}
+
+#[tonic::async_trait]
+impl WebTrack for WebTrackService {
+    async fn track_package(
+        &self,
+        _request: Request<TrackPackageRequest>,
+    ) -> Result<Response<TrackPackageReply>, Status> {
+        Ok(Response::new(TrackPackageReply {
+            status: self
+                .db
+                .lock()
+                .await
+                .get_package_events(&_request.get_ref().uid)
+                .map_err::<Status, _>(|_| ServiceError::DbError.into())?
+                .into_iter()
+                .map(|e| StatusDetails {
+                    r#type: StatusTypeUser::from(e.event_type).into(),
+                    time: Some(Timestamp::from_str(&e.time).unwrap()),
+                })
+                .collect(),
         }))
     }
 }

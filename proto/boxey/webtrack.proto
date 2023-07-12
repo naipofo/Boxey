@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package boxey.webtrack;
+
+import "packages.proto";
+
+service WebTrack {
+  rpc TrackPackage(TrackPackageRequest) returns (TrackPackageReply) {}
+}
+
+// Add device metrics
+message TrackPackageRequest {
+  string uid = 1;
+}
+
+message TrackPackageReply {
+  repeated boxey.packages.StatusDetails status = 1;
+}
