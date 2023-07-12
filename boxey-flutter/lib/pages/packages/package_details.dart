@@ -36,8 +36,7 @@ class PackageDetials extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var onColor = Theme.of(context).colorScheme.onSurfaceVariant;
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    return ListView(
       children: [
         Card(
           elevation: 0,

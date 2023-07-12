@@ -68,7 +68,7 @@ impl BoxeyDatabase {
                 },
                 self.db
                     .prepare_cached(
-                        "SELECT u_id, event_type, time FROM events WHERE package_uid = ?",
+                        "SELECT u_id, event_type, time FROM event WHERE package_uid = ?",
                     )?
                     .query_and_then([package], |r| Ok(row_to_event(r)?))?
                     .collect::<Result<_>>()?,
@@ -76,6 +76,15 @@ impl BoxeyDatabase {
         } else {
             Err(super::DbError::NoAccess)
         }
+    }
+    pub fn get_package_pickup_code(&self, package: &str) -> Option<String> {
+        self.db
+            .query_row(
+                "SELECT unlock_code FROM filled_space WHERE package_uid = ?",
+                [package],
+                |r| r.get(0),
+            )
+            .ok()
     }
 }
 

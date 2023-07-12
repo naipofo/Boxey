@@ -25,11 +25,13 @@ impl From<EventEnum> for StatusTypeUser {
     }
 }
 
+#[derive(Debug)]
 pub struct Package {
     pub u_id: String,
     pub sender: String,
 }
 
+#[derive(Debug)]
 pub struct Event {
     pub u_id: String,
     pub event_type: EventEnum,

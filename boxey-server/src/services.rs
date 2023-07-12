@@ -6,7 +6,7 @@ use crate::{
         },
         packages::{
             packages_server::Packages, PackageDetailsReply, PackageDetailsRequest, PackageHeader,
-            PackageListReply, PackageListRequest, StatusDetails, StatusTypeUser,
+            PackageListReply, PackageListRequest, PickupDetails, StatusDetails, StatusTypeUser,
         },
     },
     BoxeyDatabase,
@@ -74,14 +74,19 @@ impl Packages for PackageService {
             .await
             .get_package_detials(user, &request.get_ref().uid)
             .map_err::<Status, _>(|_| ServiceError::DbError.into())?;
-
-        let a = Ok(Response::new(PackageDetailsReply {
+        let pickup = self
+            .db
+            .lock()
+            .await
+            .get_package_pickup_code(&package.u_id)
+            .map(|code| PickupDetails { code });
+        Ok(Response::new(PackageDetailsReply {
             header: Some(PackageHeader {
-                uid: package.u_id,
+                uid: package.u_id.clone(),
                 sender: package.sender,
                 status: 0,
             }),
-            pickup: None,
+            pickup,
             status: events
                 .into_iter()
                 .map(|e| StatusDetails {
@@ -89,9 +94,7 @@ impl Packages for PackageService {
                     time: Some(Timestamp::from_str(&e.time).unwrap()),
                 })
                 .collect(),
-        }));
-        println!("{:?}", a);
-        a
+        }))
     }
 }
 
