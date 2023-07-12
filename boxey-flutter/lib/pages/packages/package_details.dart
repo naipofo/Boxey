@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
 import '../../providers/packages.dart';
 import '../../protos/packages.pbgrpc.dart';
@@ -72,6 +73,36 @@ class PackageDetials extends StatelessWidget {
                         .textTheme
                         .displayMedium!
                         .copyWith(color: onColor),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        if (package.pickup.code.isNotEmpty)
+          Card(
+            elevation: 0,
+            color: Theme.of(context).colorScheme.surfaceVariant,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  QrImageView(
+                    data: package.pickup.code,
+                    version: QrVersions.auto,
+                    size: 320,
+                    padding: const EdgeInsets.all(16.0),
+                    backgroundColor: Colors.white,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(9.0),
+                    child: Text(
+                      package.pickup.code,
+                      style: Theme.of(context).textTheme.displayLarge!.copyWith(
+                            fontFamily: "monospace",
+                            fontWeight: FontWeight.bold,
+                          ),
+                    ),
                   ),
                 ],
               ),
