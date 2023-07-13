@@ -4,7 +4,7 @@ import { compressionGzip, createGrpcTransport } from '@bufbuild/connect-node';
 
 export async function load({ url }) {
 	const uid = url.searchParams.get('uid');
-	if (uid == null) return { data: null };
+	if (!uid) return { trackPackage: null };
 
 	const transport = createGrpcTransport({
 		httpVersion: '2',
@@ -16,5 +16,5 @@ export async function load({ url }) {
 		uid: uid.toString()
 	});
 
-	return { data: res.toJsonString({ prettySpaces: 2 }) };
+	return { trackPackage: res.toJson(), uid };
 }
