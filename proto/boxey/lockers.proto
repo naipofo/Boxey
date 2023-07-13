@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package boxey.lockers;
+
+service Lockers {
+  rpc LockersList(LockersListRequest) returns (LockersListerReply) {}
+}
+
+message LockersListRequest { }
+
+message LockersListerReply {
+  repeated Locker Lockers = 1;
+}
+
+// TODO: add available sizes
+message Locker {
+  string id = 1;
+  string location = 2;
+  string location_human = 3;
+}

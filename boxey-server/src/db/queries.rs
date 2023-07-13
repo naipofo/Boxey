@@ -3,7 +3,7 @@ use std::str::FromStr;
 use rusqlite::{params, Row};
 use uuid::Uuid;
 
-use crate::model::{Event, EventEnum, Package};
+use crate::model::{Event, EventEnum, Locker, Package};
 
 use super::{BoxeyDatabase, Result};
 
@@ -92,6 +92,12 @@ impl BoxeyDatabase {
             .query_and_then([package], |r| row_to_event(&r))?
             .collect()
     }
+    pub fn get_lockers(&self) -> Result<Vec<Locker>> {
+        self.db
+            .prepare_cached("SELECT id, location, location_human FROM locker")?
+            .query_and_then([], |r| row_to_locker(&r))?
+            .collect()
+    }
 }
 
 fn row_to_package(row: &Row) -> Result<Package> {
@@ -106,5 +112,13 @@ fn row_to_event(row: &Row) -> Result<Event> {
         u_id: row.get(0)?,
         event_type: EventEnum::from_str(&(row.get::<_, String>(1)?))?,
         time: row.get(2)?,
+    })
+}
+
+fn row_to_locker(row: &Row) -> Result<Locker> {
+    Ok(Locker {
+        id: row.get(0)?,
+        location: row.get(1)?,
+        location_human: row.get(2)?,
     })
 }

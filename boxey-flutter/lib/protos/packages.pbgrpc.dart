@@ -15,20 +15,20 @@ import 'dart:core' as $core;
 import 'package:grpc/service_api.dart' as $grpc;
 import 'package:protobuf/protobuf.dart' as $pb;
 
-import 'packages.pb.dart' as $1;
+import 'packages.pb.dart' as $2;
 
 export 'packages.pb.dart';
 
 @$pb.GrpcServiceName('boxey.packages.Packages')
 class PackagesClient extends $grpc.Client {
-  static final _$packageList = $grpc.ClientMethod<$1.PackageListRequest, $1.PackageListReply>(
+  static final _$packageList = $grpc.ClientMethod<$2.PackageListRequest, $2.PackageListReply>(
       '/boxey.packages.Packages/PackageList',
-      ($1.PackageListRequest value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $1.PackageListReply.fromBuffer(value));
-  static final _$packageDetails = $grpc.ClientMethod<$1.PackageDetailsRequest, $1.PackageDetailsReply>(
+      ($2.PackageListRequest value) => value.writeToBuffer(),
+      ($core.List<$core.int> value) => $2.PackageListReply.fromBuffer(value));
+  static final _$packageDetails = $grpc.ClientMethod<$2.PackageDetailsRequest, $2.PackageDetailsReply>(
       '/boxey.packages.Packages/PackageDetails',
-      ($1.PackageDetailsRequest value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $1.PackageDetailsReply.fromBuffer(value));
+      ($2.PackageDetailsRequest value) => value.writeToBuffer(),
+      ($core.List<$core.int> value) => $2.PackageDetailsReply.fromBuffer(value));
 
   PackagesClient($grpc.ClientChannel channel,
       {$grpc.CallOptions? options,
@@ -36,11 +36,11 @@ class PackagesClient extends $grpc.Client {
       : super(channel, options: options,
         interceptors: interceptors);
 
-  $grpc.ResponseFuture<$1.PackageListReply> packageList($1.PackageListRequest request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.PackageListReply> packageList($2.PackageListRequest request, {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$packageList, request, options: options);
   }
 
-  $grpc.ResponseFuture<$1.PackageDetailsReply> packageDetails($1.PackageDetailsRequest request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.PackageDetailsReply> packageDetails($2.PackageDetailsRequest request, {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$packageDetails, request, options: options);
   }
 }
@@ -50,30 +50,30 @@ abstract class PackagesServiceBase extends $grpc.Service {
   $core.String get $name => 'boxey.packages.Packages';
 
   PackagesServiceBase() {
-    $addMethod($grpc.ServiceMethod<$1.PackageListRequest, $1.PackageListReply>(
+    $addMethod($grpc.ServiceMethod<$2.PackageListRequest, $2.PackageListReply>(
         'PackageList',
         packageList_Pre,
         false,
         false,
-        ($core.List<$core.int> value) => $1.PackageListRequest.fromBuffer(value),
-        ($1.PackageListReply value) => value.writeToBuffer()));
-    $addMethod($grpc.ServiceMethod<$1.PackageDetailsRequest, $1.PackageDetailsReply>(
+        ($core.List<$core.int> value) => $2.PackageListRequest.fromBuffer(value),
+        ($2.PackageListReply value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$2.PackageDetailsRequest, $2.PackageDetailsReply>(
         'PackageDetails',
         packageDetails_Pre,
         false,
         false,
-        ($core.List<$core.int> value) => $1.PackageDetailsRequest.fromBuffer(value),
-        ($1.PackageDetailsReply value) => value.writeToBuffer()));
+        ($core.List<$core.int> value) => $2.PackageDetailsRequest.fromBuffer(value),
+        ($2.PackageDetailsReply value) => value.writeToBuffer()));
   }
 
-  $async.Future<$1.PackageListReply> packageList_Pre($grpc.ServiceCall call, $async.Future<$1.PackageListRequest> request) async {
+  $async.Future<$2.PackageListReply> packageList_Pre($grpc.ServiceCall call, $async.Future<$2.PackageListRequest> request) async {
     return packageList(call, await request);
   }
 
-  $async.Future<$1.PackageDetailsReply> packageDetails_Pre($grpc.ServiceCall call, $async.Future<$1.PackageDetailsRequest> request) async {
+  $async.Future<$2.PackageDetailsReply> packageDetails_Pre($grpc.ServiceCall call, $async.Future<$2.PackageDetailsRequest> request) async {
     return packageDetails(call, await request);
   }
 
-  $async.Future<$1.PackageListReply> packageList($grpc.ServiceCall call, $1.PackageListRequest request);
-  $async.Future<$1.PackageDetailsReply> packageDetails($grpc.ServiceCall call, $1.PackageDetailsRequest request);
+  $async.Future<$2.PackageListReply> packageList($grpc.ServiceCall call, $2.PackageListRequest request);
+  $async.Future<$2.PackageDetailsReply> packageDetails($grpc.ServiceCall call, $2.PackageDetailsRequest request);
 }

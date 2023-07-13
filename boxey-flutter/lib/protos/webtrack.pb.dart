@@ -13,7 +13,7 @@ import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
-import 'packages.pb.dart' as $1;
+import 'packages.pb.dart' as $2;
 
 class TrackPackageRequest extends $pb.GeneratedMessage {
   factory TrackPackageRequest() => create();
@@ -64,7 +64,7 @@ class TrackPackageReply extends $pb.GeneratedMessage {
   factory TrackPackageReply.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'TrackPackageReply', package: const $pb.PackageName(_omitMessageNames ? '' : 'boxey.webtrack'), createEmptyInstance: create)
-    ..pc<$1.StatusDetails>(1, _omitFieldNames ? '' : 'status', $pb.PbFieldType.PM, subBuilder: $1.StatusDetails.create)
+    ..pc<$2.StatusDetails>(1, _omitFieldNames ? '' : 'status', $pb.PbFieldType.PM, subBuilder: $2.StatusDetails.create)
     ..hasRequiredFields = false
   ;
 
@@ -90,7 +90,7 @@ class TrackPackageReply extends $pb.GeneratedMessage {
   static TrackPackageReply? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.List<$1.StatusDetails> get status => $_getList(0);
+  $core.List<$2.StatusDetails> get status => $_getList(0);
 }
 
 

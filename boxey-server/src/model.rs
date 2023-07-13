@@ -37,3 +37,10 @@ pub struct Event {
     pub event_type: EventEnum,
     pub time: String,
 }
+
+#[derive(Debug)]
+pub struct Locker {
+    pub id: String,
+    pub location: String,
+    pub location_human: String,
+}

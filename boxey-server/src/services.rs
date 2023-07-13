@@ -4,6 +4,7 @@ use crate::{
             user_auth_server::UserAuth, user_register_reply::RegisterReply, UserRegisterReply,
             UserRegisterRequest,
         },
+        lockers::{lockers_server::Lockers, Locker, LockersListRequest, LockersListerReply},
         packages::{
             packages_server::Packages, PackageDetailsReply, PackageDetailsRequest, PackageHeader,
             PackageListReply, PackageListRequest, PickupDetails, StatusDetails, StatusTypeUser,
@@ -93,6 +94,35 @@ impl Packages for PackageService {
                 .map(|e| StatusDetails {
                     r#type: StatusTypeUser::from(e.event_type).into(),
                     time: Some(Timestamp::from_str(&e.time).unwrap()),
+                })
+                .collect(),
+        }))
+    }
+}
+
+#[derive(Debug)]
+pub struct LockerService {
+    pub db: Arc<Mutex<BoxeyDatabase>>,
+}
+
+#[tonic::async_trait]
+impl Lockers for LockerService {
+    async fn lockers_list(
+        &self,
+        _: Request<LockersListRequest>,
+    ) -> Result<Response<LockersListerReply>, Status> {
+        Ok(Response::new(LockersListerReply {
+            lockers: self
+                .db
+                .lock()
+                .await
+                .get_lockers()
+                .map_err::<Status, _>(|_| ServiceError::DbError.into())?
+                .into_iter()
+                .map(|l| Locker {
+                    id: l.id,
+                    location: l.location,
+                    location_human: l.location_human,
                 })
                 .collect(),
         }))
