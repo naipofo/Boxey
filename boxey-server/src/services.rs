@@ -46,7 +46,7 @@ impl Packages for PackageService {
         request: Request<PackageListRequest>,
     ) -> Result<Response<PackageListReply>, Status> {
         let user = self.auth_user(&request).await?;
-        let user_packages = self
+        let recipient_packages = self
             .db
             .lock()
             .await
@@ -54,7 +54,7 @@ impl Packages for PackageService {
             .map_err::<Status, _>(|_| ServiceError::DbError.into())?;
 
         Ok(Response::new(PackageListReply {
-            packages: user_packages
+            packages: recipient_packages
                 .into_iter()
                 .map(|(package, event)| PackageHeader {
                     uid: package.u_id,

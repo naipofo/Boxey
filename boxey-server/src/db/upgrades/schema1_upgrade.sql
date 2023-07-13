@@ -1,14 +1,24 @@
+-- TODO: All u_id should be binary blob
 CREATE TABLE IF NOT EXISTS package (
   u_id text NOT NULL PRIMARY KEY,
   sender text NOT NULL,
   destination_id text NOT NULL,
-  FOREIGN KEY(destination_id) REFERENCES locker(id)
+  size_id integer NOT NULL,
+  FOREIGN KEY(destination_id) REFERENCES locker(id),
+  FOREIGN KEY(size_id) REFERENCES size(id)
 );
 CREATE TABLE IF NOT EXISTS user (
   id integer PRIMARY KEY AUTOINCREMENT,
   nickname text NOT NULL
 );
-CREATE TABLE IF NOT EXISTS user_package (
+CREATE TABLE IF NOT EXISTS sender_package (
+  user_id integer NOT NULL,
+  package_uid text NOT NULL,
+  FOREIGN KEY(user_id) REFERENCES user(id),
+  FOREIGN KEY(package_uid) REFERENCES package(u_id),
+  PRIMARY KEY(user_id, package_uid)
+);
+CREATE TABLE IF NOT EXISTS recipient_package (
   user_id integer NOT NULL,
   package_uid text NOT NULL,
   FOREIGN KEY(user_id) REFERENCES user(id),
@@ -20,6 +30,7 @@ CREATE TABLE IF NOT EXISTS event (
   package_uid text NOT NULL,
   event_type text NOT NULL,
   time text NOT NULL,
+  -- TODO: save time as unix timestamp
   FOREIGN KEY(package_uid) REFERENCES package(u_id)
 );
 CREATE TABLE IF NOT EXISTS session (
@@ -36,8 +47,9 @@ CREATE TABLE IF NOT EXISTS locker (
 CREATE TABLE IF NOT EXISTS space (
   id integer PRIMARY KEY AUTOINCREMENT,
   locker_id text NOT NULL,
-  size integer NOT NULL,
-  FOREIGN KEY(locker_id) REFERENCES locker(id)
+  size_id integer NOT NULL,
+  FOREIGN KEY(locker_id) REFERENCES locker(id),
+  FOREIGN KEY(size_id) REFERENCES size(id)
 );
 CREATE TABLE IF NOT EXISTS filled_space (
   space_id integer NOT NULL,
@@ -45,4 +57,9 @@ CREATE TABLE IF NOT EXISTS filled_space (
   unlock_code text NOT NULL,
   FOREIGN KEY(space_id) REFERENCES space(id),
   FOREIGN KEY(package_uid) REFERENCES package(u_id)
+);
+
+CREATE TABLE IF NOT EXISTS size (
+  id integer PRIMARY KEY AUTOINCREMENT,
+  size text NOT NULL
 );

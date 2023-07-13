@@ -1,1 +1,1 @@
-SELECT EXISTS (SELECT * FROM user_package WHERE user_id = ? AND package_uid = ?)
+SELECT EXISTS (SELECT * FROM recipient_package WHERE user_id = ? AND package_uid = ?)
