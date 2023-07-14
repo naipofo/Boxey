@@ -8,6 +8,9 @@ pub mod boxey {
     pub mod auth {
         tonic::include_proto!("boxey.auth");
     }
+    pub mod sending {
+        tonic::include_proto!("boxey.sending");
+    }
     pub mod webtrack {
         tonic::include_proto!("boxey.webtrack");
     }

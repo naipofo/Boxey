@@ -1,8 +1,8 @@
-use strum_macros::EnumString;
+use strum_macros::{Display, EnumString};
 
 use crate::protos::boxey::packages::StatusTypeUser;
 
-#[derive(Debug, EnumString)]
+#[derive(Debug, EnumString, Display)]
 pub enum EventEnum {
     Prepared,
     HandedOver,
@@ -43,4 +43,10 @@ pub struct Locker {
     pub id: String,
     pub location: String,
     pub location_human: String,
+}
+
+#[derive(Debug)]
+pub struct Size {
+    pub id: i64,
+    pub size: String,
 }

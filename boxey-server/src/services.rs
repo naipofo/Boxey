@@ -9,6 +9,10 @@ use crate::{
             packages_server::Packages, PackageDetailsReply, PackageDetailsRequest, PackageHeader,
             PackageListReply, PackageListRequest, PickupDetails, StatusDetails, StatusTypeUser,
         },
+        sending::{
+            package_sending_server::PackageSending, PackageSendReply, PackageSendRequest, Size,
+            SizeListReply, SizeListRequest,
+        },
         webtrack::{web_track_server::WebTrack, TrackPackageReply, TrackPackageRequest},
     },
     BoxeyDatabase,
@@ -23,20 +27,17 @@ pub struct PackageService {
     pub db: Arc<Mutex<BoxeyDatabase>>,
 }
 
-impl PackageService {
-    async fn auth_user<T>(&self, request: &Request<T>) -> Result<i64, Status> {
-        let secret = request
-            .metadata()
-            .get("auth")
-            .map(|e| e.to_str().ok())
-            .flatten()
-            .ok_or::<Status>(ServiceError::BadAuth.into())?;
-        self.db
-            .lock()
-            .await
-            .get_session_user(secret)
-            .map_err::<Status, _>(|_| ServiceError::DbError.into())
-    }
+async fn auth_user<T>(request: &Request<T>, db: Arc<Mutex<BoxeyDatabase>>) -> Result<i64, Status> {
+    let secret = request
+        .metadata()
+        .get("auth")
+        .map(|e| e.to_str().ok())
+        .flatten()
+        .ok_or::<Status>(ServiceError::BadAuth.into())?;
+    db.lock()
+        .await
+        .get_session_user(secret)
+        .map_err::<Status, _>(|_| ServiceError::DbError.into())
 }
 
 #[tonic::async_trait]
@@ -45,7 +46,7 @@ impl Packages for PackageService {
         &self,
         request: Request<PackageListRequest>,
     ) -> Result<Response<PackageListReply>, Status> {
-        let user = self.auth_user(&request).await?;
+        let user = auth_user(&request, self.db.clone()).await?;
         let recipient_packages = self
             .db
             .lock()
@@ -69,7 +70,7 @@ impl Packages for PackageService {
         &self,
         request: Request<PackageDetailsRequest>,
     ) -> Result<Response<PackageDetailsReply>, Status> {
-        let user = self.auth_user(&request).await?;
+        let user = auth_user(&request, self.db.clone()).await?;
         let (package, events) = self
             .db
             .lock()
@@ -165,19 +166,66 @@ pub struct WebTrackService {
 impl WebTrack for WebTrackService {
     async fn track_package(
         &self,
-        _request: Request<TrackPackageRequest>,
+        request: Request<TrackPackageRequest>,
     ) -> Result<Response<TrackPackageReply>, Status> {
         Ok(Response::new(TrackPackageReply {
             status: self
                 .db
                 .lock()
                 .await
-                .get_package_events(&_request.get_ref().uid)
+                .get_package_events(&request.get_ref().uid)
                 .map_err::<Status, _>(|_| ServiceError::DbError.into())?
                 .into_iter()
                 .map(|e| StatusDetails {
                     r#type: StatusTypeUser::from(e.event_type).into(),
                     time: Some(Timestamp::from_str(&e.time).unwrap()),
+                })
+                .collect(),
+        }))
+    }
+}
+
+#[derive(Debug)]
+pub struct SendingService {
+    pub db: Arc<Mutex<BoxeyDatabase>>,
+}
+#[tonic::async_trait]
+impl PackageSending for SendingService {
+    async fn package_send(
+        &self,
+        request: Request<PackageSendRequest>,
+    ) -> Result<Response<PackageSendReply>, Status> {
+        let user = auth_user(&request, self.db.clone()).await;
+        let p = request.get_ref();
+        self.db
+            .lock()
+            .await
+            .send_package(
+                &p.uid,
+                &p.size_id,
+                &p.sender,
+                &p.destination_id,
+                user.ok(),
+                p.recipient_nickname.as_deref(),
+            )
+            .map_err::<Status, _>(|_| ServiceError::DbError.into())?;
+        Ok(Response::new(PackageSendReply {}))
+    }
+    async fn size_list(
+        &self,
+        _request: Request<SizeListRequest>,
+    ) -> Result<Response<SizeListReply>, Status> {
+        Ok(Response::new(SizeListReply {
+            sizes: self
+                .db
+                .lock()
+                .await
+                .get_sizes()
+                .map_err::<Status, _>(|_| ServiceError::DbError.into())?
+                .into_iter()
+                .map(|s| Size {
+                    id: s.id,
+                    size: s.size,
                 })
                 .collect(),
         }))

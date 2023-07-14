@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+package boxey.sending;
+
+service PackageSending {
+  rpc PackageSend(PackageSendRequest) returns (PackageSendReply) {}
+  rpc SizeList(SizeListRequest) returns (SizeListReply) {}
+}
+
+// TODO: rework sending to make more sense
+// sender_id and sender relation does not make much sense!
+message PackageSendRequest {
+  string uid = 1;
+  string destination_id = 2;
+  int64 size_id = 3;
+  string sender = 4;
+  optional string recipient_nickname = 5;
+}
+
+message PackageSendReply {}
+
+message SizeListRequest {}
+
+message SizeListReply {
+  repeated Size sizes = 1;
+}
+
+message Size {
+  int64 id = 1;
+  string size = 2;
+}

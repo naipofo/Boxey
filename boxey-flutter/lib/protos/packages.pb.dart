@@ -13,7 +13,7 @@ import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
-import 'google/protobuf/timestamp.pb.dart' as $4;
+import 'google/protobuf/timestamp.pb.dart' as $5;
 import 'packages.pbenum.dart';
 
 export 'packages.pbenum.dart';
@@ -258,7 +258,7 @@ class StatusDetails extends $pb.GeneratedMessage {
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'StatusDetails', package: const $pb.PackageName(_omitMessageNames ? '' : 'boxey.packages'), createEmptyInstance: create)
     ..e<StatusTypeUser>(1, _omitFieldNames ? '' : 'type', $pb.PbFieldType.OE, defaultOrMaker: StatusTypeUser.PREPARED, valueOf: StatusTypeUser.valueOf, enumValues: StatusTypeUser.values)
-    ..aOM<$4.Timestamp>(2, _omitFieldNames ? '' : 'time', subBuilder: $4.Timestamp.create)
+    ..aOM<$5.Timestamp>(2, _omitFieldNames ? '' : 'time', subBuilder: $5.Timestamp.create)
     ..hasRequiredFields = false
   ;
 
@@ -293,15 +293,15 @@ class StatusDetails extends $pb.GeneratedMessage {
   void clearType() => clearField(1);
 
   @$pb.TagNumber(2)
-  $4.Timestamp get time => $_getN(1);
+  $5.Timestamp get time => $_getN(1);
   @$pb.TagNumber(2)
-  set time($4.Timestamp v) { setField(2, v); }
+  set time($5.Timestamp v) { setField(2, v); }
   @$pb.TagNumber(2)
   $core.bool hasTime() => $_has(1);
   @$pb.TagNumber(2)
   void clearTime() => clearField(2);
   @$pb.TagNumber(2)
-  $4.Timestamp ensureTime() => $_ensure(1);
+  $5.Timestamp ensureTime() => $_ensure(1);
 }
 
 class PickupDetails extends $pb.GeneratedMessage {

@@ -5,8 +5,9 @@ use db::BoxeyDatabase;
 use protos::boxey::auth::user_auth_server::UserAuthServer;
 use protos::boxey::lockers::lockers_server::LockersServer;
 use protos::boxey::packages::packages_server::PackagesServer;
+use protos::boxey::sending::package_sending_server::PackageSendingServer;
 use protos::boxey::webtrack::web_track_server::WebTrackServer;
-use services::{AuthService, LockerService, PackageService, WebTrackService};
+use services::{AuthService, LockerService, PackageService, SendingService, WebTrackService};
 use std::sync::Arc;
 use tokio::sync::Mutex;
 use tonic::codec::CompressionEncoding;
@@ -36,6 +37,9 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let webtrack_service: WebTrackService = WebTrackService {
         db: boxey_db.clone(),
     };
+    let sending_service: SendingService = SendingService {
+        db: boxey_db.clone(),
+    };
 
     Server::builder()
         .add_service(
@@ -55,6 +59,11 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         )
         .add_service(
             WebTrackServer::new(webtrack_service)
+                .send_compressed(CompressionEncoding::Gzip)
+                .accept_compressed(CompressionEncoding::Gzip),
+        )
+        .add_service(
+            PackageSendingServer::new(sending_service)
                 .send_compressed(CompressionEncoding::Gzip)
                 .accept_compressed(CompressionEncoding::Gzip),
         )

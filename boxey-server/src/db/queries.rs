@@ -1,9 +1,10 @@
 use std::str::FromStr;
 
 use rusqlite::{params, Row};
+use time::format_description::well_known::Rfc3339;
 use uuid::Uuid;
 
-use crate::model::{Event, EventEnum, Locker, Package};
+use crate::model::{Event, EventEnum, Locker, Package, Size};
 
 use super::{BoxeyDatabase, Result};
 
@@ -98,6 +99,49 @@ impl BoxeyDatabase {
             .query_and_then([], |r| row_to_locker(&r))?
             .collect()
     }
+    pub fn send_package(
+        &self,
+        uid: &str,
+        size: &i64,
+        sender_str: &str,
+        destination: &str,
+        sender: Option<i64>,
+        recipient: Option<&str>,
+    ) -> Result<()> {
+        // TODO: execure as transaction
+        self.db.execute(
+            "INSERT INTO package(u_id, sender, destination_id, size_id) VALUES (?,?,?,?)",
+            params![uid, sender_str, destination, size],
+        )?;
+        if let Some(s) = sender {
+            self.db.execute(
+                "INSERT INTO sender_package(user_id, package_uid) VALUES (?,?)",
+                params![s, uid],
+            )?;
+        }
+        if let Some(r) = recipient {
+            self.db.execute(
+                "INSERT INTO recipient_package(user_id, package_uid) VALUES ((SELECT id FROM user WHERE nickname = ?),?)", 
+                params![r, uid]
+            )?;
+        }
+        self.db.execute(
+            "INSERT INTO event(u_id, package_uid, event_type, time) VALUES (?,?,?,?)",
+            params![
+                Uuid::new_v4().to_string(),
+                uid,
+                EventEnum::Prepared.to_string(),
+                time::OffsetDateTime::now_utc().format(&Rfc3339).unwrap()
+            ],
+        )?;
+        Ok(())
+    }
+    pub fn get_sizes(&self) -> Result<Vec<Size>> {
+        self.db
+            .prepare_cached("SELECT id, size FROM size")?
+            .query_and_then([], |r| row_to_size(&r))?
+            .collect()
+    }
 }
 
 fn row_to_package(row: &Row) -> Result<Package> {
@@ -120,5 +164,11 @@ fn row_to_locker(row: &Row) -> Result<Locker> {
         id: row.get(0)?,
         location: row.get(1)?,
         location_human: row.get(2)?,
+    })
+}
+fn row_to_size(row: &Row) -> Result<Size> {
+    Ok(Size {
+        id: row.get(0)?,
+        size: row.get(1)?,
     })
 }
