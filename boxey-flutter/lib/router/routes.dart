@@ -1,3 +1,4 @@
+import 'package:boxey_flutter/pages/sending/sending_form.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -30,6 +31,10 @@ List<RouteBase> routes = [
       GoRoute(
         path: '/settings',
         builder: (context, state) => const SettingsPage(),
+      ),
+      GoRoute(
+        path: '/send',
+        builder: (context, state) => const SendPage(),
       ),
       GoRoute(
         path: '/package/:uid',

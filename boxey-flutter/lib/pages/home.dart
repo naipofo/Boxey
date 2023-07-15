@@ -21,6 +21,11 @@ class HomePage extends HookConsumerWidget {
           route: '/packages',
         ),
         NavDestinaion(
+          icon: Icons.local_shipping,
+          label: 'Send',
+          route: '/send',
+        ),
+        NavDestinaion(
           icon: Icons.settings,
           label: 'Settings',
           route: '/settings',
